@@ -1,14 +1,20 @@
 import pygame as pp
 import gif_pygame as gf
 import os
+import time
 
 pp.init()
 pp.mixer.init()
 clock = pp.time.Clock()
 
+
+pp.mixer.music.load("static/main.mp3")
+pp.mixer.music.play(-1)
+
 cake = gf.load("static/cake.GIF")
 conf = gf.load("static/conf.GIF")
-pp.mixer.music.load("static/pindu.mp3")
+
+
 font = pp.font.Font(None, 30)
 
 conf = gf.load("static/conf.GIF")
@@ -29,16 +35,13 @@ def main():
         screen.fill('pink')
         if in_party: party() 
         else: 
-            if button(): 
+            if button():
+                time.sleep(1)
                 in_party = True
         pp.display.flip()
     pp.quit()
 
 def party():
-    # music
-    if not pp.mixer.music.get_busy():
-        pp.mixer.music.play(-1)
-        
     # cake
     cake_rect = cake.get_rect()
     conf.render(screen, conf_rect.topleft)
@@ -46,8 +49,7 @@ def party():
     cake.render(screen, cake_rect.topleft)
     clock.tick(30)
 
-def button():
-    
+def button():    
     conf_rect = conf.get_rect()
     conf_rect.center = (screen.get_width() // 2, screen.get_height() // 2)
 
