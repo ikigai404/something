@@ -6,8 +6,8 @@ pp.init()
 pp.mixer.init()
 clock = pp.time.Clock()
 
-cake = gf.load("cake.GIF")
-pp.mixer.music.load("pindu.mp3")
+cake = gf.load("static/cake.GIF")
+pp.mixer.music.load("static/pindu.mp3")
 font = pp.font.Font(None, 30)
 
 screen = pp.display.set_mode((300, 300))
