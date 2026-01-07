@@ -36,18 +36,53 @@ def main():
         if in_party: party() 
         else: 
             if button():
-                time.sleep(1)
                 in_party = True
         pp.display.flip()
     pp.quit()
 
 def party():
-    # cake
-    cake_rect = cake.get_rect()
-    conf.render(screen, conf_rect.topleft)
-    cake_rect.center = (screen.get_width() // 2, screen.get_height() // 2)
-    cake.render(screen, cake_rect.topleft)
-    clock.tick(30)
+    # Fade in once
+    for alpha in range(0, 256, 10):
+        screen.fill('pink')
+
+        # Animate cake
+        cake_rect = cake.get_rect()
+        cake_rect.center = (screen.get_width() // 2, screen.get_height() // 2)
+        cake.render(screen, cake_rect.topleft)
+
+        # Animate confetti
+        conf.render(screen, conf_rect.topleft)
+
+        # Overlay fade surface
+        fade_surface = pp.Surface(screen.get_size())
+        fade_surface.fill((0, 0, 0))
+        fade_surface.set_alpha(255 - alpha)
+        screen.blit(fade_surface, (0, 0))
+
+        pp.display.flip()
+        clock.tick(30)
+
+    # After fade, enter normal party loop
+    running_party = True
+    while running_party:
+        for event in pp.event.get():
+            if event.type == pp.QUIT:
+                pp.quit()
+                return
+
+        screen.fill('pink')
+
+        # Animate cake
+        cake_rect = cake.get_rect()
+        cake_rect.center = (screen.get_width() // 2, screen.get_height() // 2)
+        cake.render(screen, cake_rect.topleft)
+
+        # Animate confetti
+        conf.render(screen, conf_rect.topleft)
+
+        pp.display.flip()
+        clock.tick(30)
+
 
 def button():    
     conf_rect = conf.get_rect()
@@ -77,6 +112,6 @@ def button():
             msg = "Happy birthday Pinduu! you are finally turning 20 bwahah feel old yet? i hope this year brings you loads and loads of happiness and joy, cuz u deserve it ^^ thank you for randomly coming into my life when i was down in the dumps :') u are one of the things that made 2025 bareable and i love ya for it. i hope wherever ya go our friendship stays solid ^^ couldnt have asked for a better softie than ya <3. anywhoo i actually hope u see this cuz u can be a blind fuck sometimes XD. Here's to many more of ur mischief! huggg ...happy 20th!"
             print(msg)
             return True
-    
+
 if __name__ == "__main__":
     main()
